@@ -10,17 +10,50 @@ flow of over 70GB of text per day. An average book is about 2MB in size~\cite{bo
 writing about 35,000 books a day.
 
 With this wealth of textual information that is often supplemented with geo-location data and content-connecting hashtags,
-it is no surprise that a multitude of tools have arisen to harvest the information encoded in tweets. Fabric, Twitter's
-API~\cite{twitterAPI}, has
+it is no surprise that a multitude of tools have arisen to harvest the information encoded in tweets. Twitter's
+API~\cite{twitterAPI} has been used to build visualizations of tweet locations and several third party apps
+have been created: Tweet Ping is a website that tracks live tweets and displays them like lights on a global map~\cite{tweetping1}
+~\cite{tweetping2}; A World of Tweets is a similar website that builds a heatmap of tweets~\cite{worldoftweets}; Tweet Beam
+creates a wall of tweets based on a given hashtag or search query~\cite{tweetbeam}. These are just a few of the many apps that
+utilize the live stream of tweets from Twitter.
+
+Existing products that leverage the informational wealth of Twitter are mostly interested in geolocation, and are either
+purely historical or purely live. Few, if any, current products focus on the connection between tweets or go in anyway go beyond
+simply using geolocation or maybe a keyword. We seek to move away from this problem space by creating a product that:
+\begin{itemize}[noitemsep]
+\item Uses both historical and live-stream data
+\item Focuses on relationships between tweets, users, and content, rather than on just their location
+\item Displays these relationships in a visually pleasing way
+\end{itemize}
+
 
 
 \subsection{Goals}
 \textbf{The goals you have for the project. What constitutes success and how will you evaluate it?}
 
-Our goal for this project is to have a fu
+Our goal for this project is to have a fully functional visualization depicting the popularity of tweets (based on
+re-tweets) and the connectivity of tweets being currently tweeted (based on @replies and hashtags). We will also keep a
+small (several week long) history of tweets, so that users have the option of viewing a graph of historical tweets as
+well as a new graph of tweets starting from when the program is initialized.
 
 \subsection{Hypothesis}
 \textbf{Your hypothesis: given the work you intend to do, what are the results you expect to see? How does this work help to solve the problem?}
+
+Through this work, we expect to be able to provide a different type of Twitter visualization than what is currently available.
+We expect to be able to generate graphs that allow us to "watch" different Twitter conversations happen in real time. While
+we won't be able to see specific tweets, we will be able to see the topics of conversations (based on hashtags) as well as
+what high-profile accounts are taking part in the conversation in real-time.
+
+The main difference between our visualization of Twitter data and currently existing visualization tools is that we choose
+to focus on the connectivity and topics of tweets rather than on location information. Current Twitter visualization tools
+allow users to see where and when people are tweeting. This take on visualization, while cool, may not actually provide
+any new information about the Twittersphere. Location data for tweets correlates closely with population distribution data (i.e.
+major cities have a lot of people tweeting in them). Our work will allow us to draw different conclusions from Twitter
+data. By visualizing popularity and connectivity of tweets, we expect to be able to see popular users (most likely
+celebrities), what they are talking about, what types of tweets are spawning large conversations, what hashtags are
+popular, and where they originate. These are only a few examples of what is possible. Although we cannot predict exactly
+what kind of insights can be provided by this new way of visualizing Twitter data, the above list provides a small example
+of the kinds of things we expect our program to be able to provide to users.
 
 \subsection{Environment}
 \textbf{Characterize environment you intend to operate in. Does your project operate on Amazon Web Services? on the general Internet? in a data center?}
