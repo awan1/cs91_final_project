@@ -9,7 +9,7 @@
 \usepackage[hyphens]{url}
 \usepackage{balance}
 
-\newcommand{\sys}{\textsc{TwitCon}(WT)\xspace}
+\newcommand{\sys}{TwitCon\xspace}
 
 % Uncomment these to reduce/eliminate widow/orphan lines.
 %\widowpenalty=10000
@@ -20,7 +20,7 @@
 
 \date{}
 
-\title{The Twitter Connection [Working Title]}
+\title{The Twitter Connection}
 
 \author{
     Gabe Benjamin, Cole Harbeck, and Adrian Wan\\

@@ -9,22 +9,14 @@
   author = {{Twitter Inc.}},
   title = {{About Twitter, Inc.}},
   year = 2014,
-  url = {http://www.twitter.com/},
+  url = {http://www.twitter.com},
   urldate = {2014-11-05}
 }
 
 @online{bookfact,
   author = {Liza Daly},
   title = {How big is the average ePub book?},
-  date = {2009-11-16},
+  date = {2009-11-16}
   url = {https://blog.safaribooksonline.com/2009/11/16/how-big-is-the-average-epub-book/},
-  urldate = {2014-11-05}
-}
-
-@online{twitterAPI,
-  author = {{Twitter, Inc.}},
-  title = {Twitter Developers},
-  year = 2014,
-  url = {https://dev.twitter.com/},
   urldate = {2014-11-05}
 }

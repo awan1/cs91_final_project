@@ -9,7 +9,7 @@
 \usepackage[hyphens]{url}
 \usepackage{balance}
 
-\newcommand{\sys}{\textsc{TwitCon}(WT)\xspace}
+\newcommand{\sys}{TwitCon\xspace}
 
 % Uncomment these to reduce/eliminate widow/orphan lines.
 %\widowpenalty=10000

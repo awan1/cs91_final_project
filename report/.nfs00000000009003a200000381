@@ -9,7 +9,7 @@
 \usepackage[hyphens]{url}
 \usepackage{balance}
 
-\newcommand{\sys}{\textsc{TwitCon}(WT)\xspace}
+\newcommand{\sys}{DZone\xspace}
 
 % Uncomment these to reduce/eliminate widow/orphan lines.
 %\widowpenalty=10000
@@ -20,24 +20,23 @@
 
 \date{}
 
-\title{The Twitter Connection [Working Title]}
+\title{The Twitter Connection}
 
 \author{
-    Gabe Benjamin, Cole Harbeck, and Adrian Wan\\
+    Gabe Benjamin, Cole Harbeck, and Adrian Wan
     Swarthmore College\\
     \{gbenjam1, charbec1, awan1\}@cs.swarthmore.edu
 }
 
 \maketitle
 
-\input{07-proposal}
-% \input{00-abstract}
-% \input{01-introduction}
-% \input{02-related}
-% \input{03-architecture}
-% \input{04-implementation}
-% \input{05-evaluation}
-% \input{06-conclusion}
+\input{00-abstract}
+\input{01-introduction}
+\input{02-related}
+\input{03-architecture}
+\input{04-implementation}
+\input{05-evaluation}
+\input{06-conclusion}
 
 \bibliographystyle{abbrv}
 \balance\bibliography{bibliography}
