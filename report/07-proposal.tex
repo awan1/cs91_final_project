@@ -36,7 +36,31 @@ re-tweets) and the connectivity of tweets being currently tweeted (based on @rep
 small (several week long) history of tweets, so that users have the option of viewing a graph of historical tweets as
 well as a new graph of tweets starting from when the program is initialized.
 
-\subsection{Hypothesis}
+The primary goal of this project is to create a (relatively) novel visualization of relationships between Twitter users.
+As such, success can be measured by the quality of the insights that \sys provides. By exploring the visualizations 
+produced and seeing what interesting (see \S \ref{sec:hypothesis} for an articulation of the trends that we hope to see),
+we would consider the quality of the insights gleaned from \sys a marker for its success.
+
+Equally central to this project is how we can present interesting information in aesthetically pleasing, intuitive ways.
+New information is no benefit if it does not elucidate the data that it is gleaned from. To have value, visualizations
+must be pleasing to the eye and easy on the mind. 
+
+Thus, our goals can be summarized as follows: we wish to create a product that
+\begin{itemize}[noitemsep]
+\item Provides interesting insights into the culture of Twitter by mapping interactions of users
+\item Displays both historical and live-stream data
+\item Presents an aesthetically pleasing, intuitive way to understand Twitter from a different, global perspective.
+\end{itemize}
+
+We envision \sys working as follows: users access a webpage which starts blank and immediately starts populating with
+live tweets. The tweets grow in size as they are retweeted, tweets that are replies are connected, and tweets are 
+clustered by conversation rather than by location. Coloring could be used based on mood --- a plug-in affect detection
+module could be an interesting demonstration of the modularity of our work. The window changes in size to accomodate the
+largest (most retweeted) tweets. Users can move the window around by dragging and clicking, and can zoom in and out
+by scrolling. Tweets contain a user handle and/or (user-provided) real name, a snippet of content, and can be clicked on
+to access the full tweet. (see Listen to Wikipedia for inspiration?)
+
+\subsection{Hypothesis} \label{sec:hypothesis}
 \textbf{Your hypothesis: given the work you intend to do, what are the results you expect to see? How does this work help to solve the problem?}
 
 Through this work, we expect to be able to provide a different type of Twitter visualization than what is currently available.
@@ -55,7 +79,16 @@ popular, and where they originate. These are only a few examples of what is poss
 what kind of insights can be provided by this new way of visualizing Twitter data, the above list provides a small example
 of the kinds of things we expect our program to be able to provide to users.
 
+We hope to see 3 very different types of tweets: tweets from celebrity figures, characterized by a large number of retweets
+and replies; announcement and news tweets that are predominantly retweeted; and many much smaller threads of conversation
+that consist of many interconnected \@reply tweets. 
+
 \subsection{Environment}
 \textbf{Characterize environment you intend to operate in. Does your project operate on Amazon Web Services? on the general Internet? in a data center?}
 
-We intend to operate using Amazon Web Services. \sys consists of an always-on EC2 instance
+We intend to operate using Amazon Web Services. \sys consists of an always-on EC2 instance that is responsible for 
+``listening'' to Twitter via Fabric and distilling the presentable information from it, a Hadoop cluster that caches 
+results such that users can view the current live stream over a variable-range historical context (up to several weeks),
+and a Web UI that allows users to view and interact with the data. The webpage will be hosted using GitHub pages (CITATION)
+or simply on the EC2 machine; implementation details can be fleshed out on the fly. Visualizations could potentially
+employ libraries/tools such as d3.js. 
