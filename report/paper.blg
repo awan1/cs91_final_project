@@ -17,45 +17,51 @@ Warning--entry type for "worldoftweets" isn't style-file defined
 --line 48 of file bibliography.bib
 Warning--entry type for "tweetbeam" isn't style-file defined
 --line 56 of file bibliography.bib
-You've used 7 entries,
+Warning--entry type for "listenwiki" isn't style-file defined
+--line 64 of file bibliography.bib
+Warning--entry type for "d3js" isn't style-file defined
+--line 72 of file bibliography.bib
+Warning--entry type for "xkcd-heatmap" isn't style-file defined
+--line 80 of file bibliography.bib
+You've used 10 entries,
             2118 wiz_defined-function locations,
-            522 strings with 4047 characters,
-and the built_in function-call counts, 1393 in all, are:
-= -- 117
-> -- 49
+            532 strings with 4203 characters,
+and the built_in function-call counts, 2018 in all, are:
+= -- 170
+> -- 76
 < -- 0
-+ -- 22
-- -- 14
-* -- 42
-:= -- 231
-add.period$ -- 14
-call.type$ -- 7
-change.case$ -- 28
++ -- 33
+- -- 22
+* -- 63
+:= -- 334
+add.period$ -- 20
+call.type$ -- 10
+change.case$ -- 41
 chr.to.int$ -- 0
-cite$ -- 7
-duplicate$ -- 49
-empty$ -- 155
-format.name$ -- 14
-if$ -- 300
+cite$ -- 10
+duplicate$ -- 70
+empty$ -- 221
+format.name$ -- 22
+if$ -- 435
 int.to.chr$ -- 0
-int.to.str$ -- 7
+int.to.str$ -- 10
 missing$ -- 0
-newline$ -- 31
-num.names$ -- 14
-pop$ -- 61
+newline$ -- 43
+num.names$ -- 20
+pop$ -- 88
 preamble$ -- 1
-purify$ -- 21
+purify$ -- 31
 quote$ -- 0
-skip$ -- 60
+skip$ -- 86
 stack$ -- 0
-substring$ -- 36
-swap$ -- 7
+substring$ -- 51
+swap$ -- 10
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 28
+type$ -- 40
 warning$ -- 0
-while$ -- 14
-width$ -- 8
-write$ -- 56
-(There were 7 warnings)
+while$ -- 20
+width$ -- 12
+write$ -- 79
+(There were 10 warnings)
