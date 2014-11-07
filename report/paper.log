@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.7.25)  5 NOV 2014 23:46
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.7.23)  6 NOV 2014 22:31
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -287,6 +287,9 @@ Overfull \hbox (10.29456pt too wide) in paragraph at lines 32--47
 wit-Con\T1/aer/m/n/9 (WT)
  []
 
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
 [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
 
@@ -294,7 +297,7 @@ wit-Con\T1/aer/m/n/9 (WT)
 Here is how much of TeX's memory you used:
  3352 strings out of 493420
  43859 string characters out of 6144065
- 119390 words of memory out of 5000000
+ 113389 words of memory out of 5000000
  6685 multiletter control sequences out of 15000+600000
  49845 words of font info for 69 fonts, out of 8000000 for 9000
  935 hyphenation exceptions out of 8191
@@ -309,7 +312,7 @@ texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texlive
 fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/
 urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8
 a.pfb>
-Output written on paper.pdf (2 pages, 107549 bytes).
+Output written on paper.pdf (2 pages, 107516 bytes).
 PDF statistics:
  48 PDF objects out of 1000 (max. 8388607)
  34 compressed objects within 1 object stream
