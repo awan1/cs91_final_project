@@ -1,0 +1,43 @@
+\begin{thebibliography}{10}
+
+\bibitem{d3js}
+M.~Bostock.
+\newblock d3.js - data-driven documents, 2014.
+
+\bibitem{bookfact}
+L.~Daly.
+\newblock How big is the average epub book?
+
+\bibitem{tweetping2}
+D.~D'Orazio.
+\newblock Map tweets in real time across the world with tweet ping.
+
+\bibitem{tweetping1}
+F.~Ernewein.
+\newblock Tweet ping, 2013.
+
+\bibitem{worldoftweets}
+{Frog Design}.
+\newblock A world of tweets, 2010.
+
+\bibitem{listenwiki}
+S.~LaPorte and M.~Hashemi.
+\newblock Listen to wikipedia, 2014.
+
+\bibitem{xkcd-heatmap}
+R.~Monroe.
+\newblock Heatmap.
+
+\bibitem{tweetbeam}
+{Tweet Beam}.
+\newblock Tweet beam, 2011.
+
+\bibitem{twitter}
+{Twitter Inc.}
+\newblock {About Twitter, Inc.}, 2014.
+
+\bibitem{twitterAPI}
+{Twitter, Inc.}
+\newblock Twitter developers, 2014.
+
+\end{thebibliography}

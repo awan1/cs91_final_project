@@ -5,57 +5,103 @@
 
 Twitter is a social media platform with 284 million users active per month, tweeting approximately 500 million tweets
 per day.~\cite{twitter} At a maximum of 140 characters per tweet and about 1 byte per character\footnote{Issues arise with different
-encodings, but we ignore these for the sake of our back-of-the-envelope calculation} this represents an informational
+encodings, but we ignore these for the purposes of our back-of-the-envelope calculation.} this represents an informational
 flow of over 70GB of text per day. An average book is about 2MB in size~\cite{bookfact}, so Twitter users are collectively
 writing about 35,000 books a day.
 
 With this wealth of textual information that is often supplemented with geo-location data and content-connecting hashtags,
 it is no surprise that a multitude of tools have arisen to harvest the information encoded in tweets. Twitter's
 API~\cite{twitterAPI} has been used to build visualizations of tweet locations and several third party apps
-have been created: Tweet Ping is a website that tracks live tweets and displays them like lights on a global map~\cite{tweetping1}
-~\cite{tweetping2}; A World of Tweets is a similar website that builds a heatmap of tweets~\cite{worldoftweets}; Tweet Beam
+have been created: Tweet Ping is a website that tracks live tweets and displays them like lights on a global
+map~\cite{tweetping1, tweetping2}; A World of Tweets is a similar website that builds  heatmap of tweets~\cite{worldoftweets}; Tweet Beam
 creates a wall of tweets based on a given hashtag or search query~\cite{tweetbeam}. These are just a few of the many apps that
 utilize the live stream of tweets from Twitter.
 
-Existing products that leverage the informational wealth of Twitter are mostly interested in geolocation, and are either
-purely historical or purely live. Few, if any, current products focus on the connection between tweets or go in anyway go beyond
-simply using geolocation or maybe a keyword.
+Existing systems that leverage the informational wealth of Twitter are mostly interested in geolocation, and are either
+purely historical or purely live. Few, if any, current systems focus on the connection between tweets or go beyond
+simply using geolocation or maybe a keyword. We seek to move away from this problem space by creating a system that:
+\begin{itemize}[noitemsep]
+\item Uses both historical and live-stream data
+\item Focuses on relationships between tweets, users, and content, rather than on just their location
+\item Displays these relationships in a visually pleasing way.
+\end{itemize}
 
 \subsection{Goals}
 \textbf{The goals you have for the project. What constitutes success and how will you evaluate it?}
 
-We seek to move away from this problem space by creating a product that:
+Our goal for this project is to have a fully functional visualization depicting the popularity of historical and recent
+tweets (based on retweets) and the connectivity of tweets (based on @replies and hashtags).
+% We will also keep a small (several week long) history of tweets,
+% so that users have the option of viewing a graph of historical tweets as
+%well as a new graph of tweets starting from when the program is initialized.
+We envision \sys working as follows: users access a webpage which starts blank and immediately starts populating with
+live tweets. The tweets grow in size as they are retweeted, tweets that are replies are connected, and tweets are
+clustered by conversation rather than by location. Coloring could be used based on mood --- a plug-in affect detection
+module could be an interesting demonstration of the modularity of our work\footnote{G.\ Benjamin has authored early work on
+a mood-detection module that we would be interested in applying.}. The window changes in size to accomodate the
+largest (most retweeted) tweets. Users can move the window around by dragging and clicking, and can zoom in and out
+by scrolling. Tweets contain a user handle and/or (user-provided) real name, a snippet of content, and can be clicked on
+to access the full tweet. Movement towards the edge of the window displays options, such as a toggle for historical
+context (continuous scale at day variation up to perhaps the month scale --- the maximum amount of caching depends on
+API and storage limitations), mood, and so on.
+
+The primary goal of this project is to create a (relatively) novel visualization of relationships between Twitter users.
+As such, success can be measured by the quality of the insights that \sys provides. By exploring the visualizations
+produced --- see \S \ref{sec:hypothesis} for an articulation of the trends that we hope to see ---
+we would consider the quality of the insights gleaned from \sys a marker for its success.
+
+Equally central to this project is how we can present interesting information in aesthetically pleasing, intuitive ways.
+New information is no benefit if it does not elucidate the data that it is gleaned from. To have value, visualizations
+must be pleasing to the eye and easy on the mind. Hatnote's Listen to Wikipedia project~\cite{listenwiki} serves as our
+primary inspiration for a simple visualization (and auralization) that beautifully presents data that may have otherwise
+fallen to the wayside (additions to and subtractions from articles, additions of new users and pages).
+
+Thus, our goals can be summarized as follows: we wish to create a system that
 \begin{itemize}[noitemsep]
-\item Uses both historical and live-stream data
-\item Focuses on relationships between tweets, users, and content, rather than on just their location
-\item Displays these relationships in a visually pleasing way
+\item Provides interesting insights into the culture of Twitter by mapping interactions of users
+\item Displays both historical and live-stream data
+\item Presents an aesthetically pleasing, intuitive way to understand Twitter from a different, global perspective.
 \end{itemize}
 
-Our goal for this project is to have a fully functional visualization depicting the popularity of tweets (based on
-re-tweets) and the connectivity of tweets being currently tweeted (based on @replies and hashtags). We will also keep a
-small (several week long) history of tweets, so that users have the option of viewing a graph of historical tweets as
-well as a new graph of tweets starting from when the program is initialized.
-
-\subsection{Hypothesis}
+\subsection{Hypothesis} \label{sec:hypothesis}
 \textbf{Your hypothesis: given the work you intend to do, what are the results you expect to see? How does this work help to solve the problem?}
 
-Through this work, we expect to be able to provide a different type of Twitter visualization than what is currently available.
-We expect to be able to generate graphs that allow us to "watch" different Twitter conversations happen in real time. While
-we won't be able to see specific tweets, we will be able to see the topics of conversations (based on hashtags) as well as
-what high-profile accounts are taking part in the conversation in real-time.
+The main difference between \sys and currently existing visualization tools is that we choose
+to focus on the relationships between tweets rather than on user location. Current Twitter visualization tools
+allow users to see where and when people are tweeting. This visualization method is no longer novel, and may not actually provide
+any new information about the Twittersphere, as geographical distribution for tweets correlates closely with population
+distributions~\cite{xkcd-heatmap}\footnote{Yes, this is an xkcd citation. No, this citation doesn't actually directly apply
+to our argument. Yes, we should probably get a better source.}.
 
-The main difference between our visualization of Twitter data and currently existing visualization tools is that we choose
-to focus on the connectivity and topics of tweets rather than on location information. Current Twitter visualization tools
-allow users to see where and when people are tweeting. This take on visualization, while cool, may not actually provide
-any new information about the Twittersphere. Location data for tweets correlates closely with population distribution data (i.e.
-major cities have a lot of people tweeting in them). Our work will allow us to draw different conclusions from Twitter
-data. By visualizing popularity and connectivity of tweets, we expect to be able to see popular users (most likely
-celebrities), what they are talking about, what types of tweets are spawning large conversations, what hashtags are
-popular, and where they originate. These are only a few examples of what is possible. Although we cannot predict exactly
-what kind of insights can be provided by this new way of visualizing Twitter data, the above list provides a small example
-of the kinds of things we expect our program to be able to provide to users.
+Our work will allow us to draw different conclusions from Twitter
+data. Although we cannot predict exactly what kind of insights can be provided by this new way of visualizing Twitter data,
+by visualizing popularity and connectivity of tweets, examples of what we expect to be able to see include:
+\begin{itemize}[noitemsep]
+\item Types of tweets, including:
+\begin{itemize}[noitemsep, nolistsep]
+\item Those from celebrity figures, characterized by a large number of retweets and replies
+\item Announcement and news tweets that are predominantly retweeted
+\item Personal tweets interconnected by @replies that form threads of conversation.
+\end{itemize}
+\item Types of tweets that are spawning large conversations
+\item How hashtags start trending (likely a popular post originating the hashtag is retweeted and/or replied to).
+\end{itemize}
+
+Creating a system that can substantiate these example insights would be a good measure of the success of our work.
+It would justify this shift of focus from geographical location to personal context and interaction, and potentially
+spawn a new genre of Twitter visualizations.
+
+% Through this work, we expect to be able to provide a novel type of Twitter visualization.
+% We expect to be able to generate graphs that allow us to "watch" different Twitter conversations happen in real time. While
+% we won't be able to see specific tweets, we will be able to see the topics of conversations (based on hashtags) as well as
+% what high-profile accounts are taking part in the conversation in real-time.
 
 \subsection{Environment}
 \textbf{Characterize environment you intend to operate in. Does your project operate on Amazon Web Services? on the general Internet? in a data center?}
 
-We intend to operate using Amazon Web Services. \sys consists of an always-on EC2 instance
+We intend to operate using Amazon Web Services. \sys consists of an always-on EC2 instance that is responsible for
+``listening'' to Twitter via Fabric and distilling the presentable information from it, a Hadoop cluster that caches
+results such that users can view the current live stream over a variable-range historical context (up to several weeks),
+and a Web UI that allows users to view and interact with the data. The webpage will likely be hosted on the EC2 machine;
+implementation details can be fleshed out on the fly. Visualizations could potentially employ libraries/tools such as
+d3.js~\cite{d3js}.
