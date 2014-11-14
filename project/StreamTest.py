@@ -36,7 +36,6 @@ class StdOutListener(StreamListener):
 
     def on_error(self, status):
         print status
-        #myFile.close()
 
     def save_tweet(self, fullDict):
         """
@@ -54,9 +53,7 @@ class StdOutListener(StreamListener):
         tweetDict['id_str'] = fullDict['id_str']
         tweetDict['retweet_count'] = fullDict['retweet_count']
         tweetDict['in_reply_to_user_id'] = fullDict['in_reply_to_user_id']
-        tweetDict['in_reply_to_user_id_str'] = fullDict['in_reply_to_user_id_str']
         tweetDict['created_at'] = fullDict['created_at']
-        tweetDict['in_reply_to_status_id_str'] = fullDict['in_reply_to_status_id_str']
 
         tweetStr = json.dumps(tweetDict).encode("utf-8")
 
