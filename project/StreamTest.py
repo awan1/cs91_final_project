@@ -17,30 +17,20 @@ access_token_secret=""
 search = ""
 fileName = ""
 class StdOutListener(StreamListener):
-
-
     """ A listener handles tweets are the received from the stream.
     This is a basic listener that just prints received tweets to stdout.
-
     """
+
     def on_data(self, data):
-        myFile = open(fileName,'a')
-        #status = Status.parse(self.api, json.loads(data))
-        #print >> myFile, "TEST"
-        myStr = ""
-        #print  data, "\n"
         myDict = json.loads(data)
 
         if 'entities' not in myDict:
-            pass#print "ERROR -- NO ENTITIES"
-        elif len(myDict['entities']['hashtags']) > 0:
-            print >> myFile, data.encode("utf-8")
-            print myDict['text'].encode("utf-8")
-            myFile.close()
-
-
+            return
+        else:
+            self.save_tweet(myDict)
 
         return True
+
     def on_status(status):
         print "STATUS"
 
@@ -48,7 +38,30 @@ class StdOutListener(StreamListener):
         print status
         #myFile.close()
 
+    def save_tweet(self, fullDict):
+        """
+        Takes in a full tweet dictionary and writes only the significant fields
+        to a file
+        """
+        myFile = open(fileName,'a')
+        tweetDict = {}
 
+        tweetDict['text'] = fullDict['text']
+        tweetDict['in_reply_to_status_id'] = fullDict['in_reply_to_status_id']
+        tweetDict['id'] = fullDict['id']
+        tweetDict['entities'] = fullDict['entities']
+        tweetDict['in_reply_to_screen_name'] = fullDict['in_reply_to_screen_name']
+        tweetDict['id_str'] = fullDict['id_str']
+        tweetDict['retweet_count'] = fullDict['retweet_count']
+        tweetDict['in_reply_to_user_id'] = fullDict['in_reply_to_user_id']
+        tweetDict['in_reply_to_user_id_str'] = fullDict['in_reply_to_user_id_str']
+        tweetDict['created_at'] = fullDict['created_at']
+        tweetDict['in_reply_to_status_id_str'] = fullDict['in_reply_to_status_id_str']
+
+        tweetStr = json.dumps(tweetDict).encode("utf-8")
+
+        print >> myFile, tweetStr
+        myFile.close()
 
 def readInKeys():
     global consumer_key, consumer_secret, access_token, access_token_secret
@@ -61,32 +74,13 @@ def readInKeys():
 
 if __name__ == '__main__':
     readInKeys()
-    print "CONSUMER_KEY =" + consumer_key
-    print "CONSUMER_SECRET =" + consumer_secret
-    print "ACCESS_TOKEN =" + access_token
-    print "ACCESS_TOKEN_SECRET" + access_token_secret
     l = StdOutListener()
     auth = OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
     stream = Stream(auth, l)
 
-    """
     if len(sys.argv) < 2:
-        fileName = "AllTweets.txt"
-        stream.sample()
-    elif sys.argv[1] == '1':
-        fileName = "HappyEmoAll.txt"
-        stream.filter(track=[':-)',':)','=)',':D'])
-    elif sys.argv[1] == '2':
-        fileName = "SadEmoAll.txt"
-        stream.filter(track=[':-(',':(','=(',';('])
+        print "USAGE <OUTPUT_FILENAME>"
 
-    else:
-    """
-    if len(sys.argv) < 3:
-        print "USAGE <SEARCH_TERM> <OUTPUT_FILENAME>"
-    #search = sys.argv[1]
-    #serach = "#" + search
-    fileName = sys.argv[2]
-    search = sys.argv[1]
-    stream.filter(track=[search])
+    fileName = sys.argv[1]
+    stream.sample()
