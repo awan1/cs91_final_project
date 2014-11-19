@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>Vega Scaffold</title>
+    <title>Vega Scaffold Test</title>
     <!-- optional imports
     <script src="http://trifacta.github.io/vega/lib/d3.geo.projection.min.js"></script>
     <script src="http://trifacta.github.io/vega/lib/topojson.js"></script>
@@ -16,9 +16,11 @@
 function parse(spec) {
   vg.parse.spec(spec, function(chart) { chart({el:"#vis"}).update(); });
 }
-parse("barchart.json");
+parse("vega.json");
+// parse("barchart.json");
 </script>
-
 <p>To generate this, run <tt>$ python -m SimpleHTTPServer 8888</tt> in the <tt>static</tt> folder, then visit
 <tt>localhost:8888</tt>in a browser.</p>
+<p>Todo: how to update visualization? </p>
+
 </html>
