@@ -1,24 +1,29 @@
 """
 @author: Adrian Wan
 
-graph-test.py: a test for generating a graph visualization using Vincent
+graph-test.py: a test for generating a graph visualization
 """
-import vincent
-import random
-import pandas as pd
+import networkx as nx
+from networkx.readwrite import json_graph
+import json
+from itertools import permutations
 
 def main():
+  G = nx.Graph()
+  # List of nodes. Nodes are tuples of (node_name, attribute_dict)
+  node_list = [(i, {'rt':i*3}) for i in range(1,6)]
 
-  # TODO: figure out how to create a graph using vincent.
-  cat_1 = ['y1', 'y2', 'y3', 'y4']
-  index_1 = range(0, 21, 1)
-  multi_iter1 = {'index': index_1}
-  for cat in cat_1:
-    multi_iter1[cat] = [random.randint(10, 100) for x in index_1]
+  # Add the nodes with their attribute
+  for node_name, attribute_dict in node_list:
+    G.add_node(node_name, rt=attribute_dict['rt'])
 
-  bar = vincent.Bar(multi_iter1['y1'])
-  bar.axis_titles(x='Index', y='Value')
-  bar.to_json('vega.json')
+  for pair in [x for x in permutations([tup[0] for tup in node_list], 2)]:
+    G.add_edge(*pair)
+
+  data = json_graph.node_link_data(G)
+  with open("graph.json", 'w') as f:
+    json.dump(data, f)
+
 
 if __name__ == '__main__':
   main()
