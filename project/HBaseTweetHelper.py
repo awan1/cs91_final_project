@@ -1,7 +1,7 @@
 __author__ = 'thegaber777'
 import happybase
 
-class TweetWriter:
+class HBaseTweetHelper:
     def __init__(self):
         self.table = happybase.Connection('localhost').table('tweet_table')
         print "Connected to HBase"
@@ -11,6 +11,10 @@ class TweetWriter:
         del tweetDic['id']
         saveDic = self.appendPrefixToDicKeys(tweetDic, "tweet_info")
         self.table.put(rowId, saveDic)
+        print "SAVED TWEET: " + str(rowId)
+
+    def iter(self):
+        return self.table.scan()
 
 
     def appendPrefixToDicKeys(self, dic, prefix):

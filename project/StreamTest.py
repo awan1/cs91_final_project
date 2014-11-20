@@ -3,7 +3,7 @@ from tweepy import OAuthHandler
 from tweepy import Stream
 import json
 import sys
-from TweetWriter import TweetWriter
+from HBaseTweetHelper import HBaseTweetHelper
 from tweepy.utils import import_simplejson, urlencode_noplus
 json = import_simplejson()
 # Go to http://dev.twitter.com and create an app. 
@@ -17,7 +17,7 @@ access_token=""
 access_token_secret=""
 search = ""
 fileName = ""
-tweetWriter = TweetWriter()
+tweetHelper = HBaseTweetHelper()
 
 class StdOutListener(StreamListener):
     """ A listener handles tweets are the received from the stream.
@@ -60,7 +60,7 @@ class StdOutListener(StreamListener):
 
         tweetStr = json.dumps(tweetDict).encode("utf-8")
 
-        tweetWriter.saveTweet(tweetDict)
+        tweetHelper.saveTweet(tweetDict)
         print >> myFile, tweetStr
         myFile.close()
 
