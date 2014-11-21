@@ -3,7 +3,11 @@ import happybase
 
 class HBaseTweetHelper:
     def __init__(self):
-        self.table = happybase.Connection('localhost').table('tweet_table')
+        connection = happybase.Connection('sesame.cs.swarthmore.edu',60020)
+        tables = connection.tables()
+        if "tweet_table" not in tables:
+            connection.create_table('tweet_table',{'tweet_info':dict()})
+        self.table = connection.table('tweet_table')
         print "Connected to HBase"
 
     def saveTweet(self, tweetDic):
