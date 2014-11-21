@@ -15,7 +15,7 @@ def main():
 
   # Add the nodes with their attribute
   for node_name, attribute_dict in node_list:
-    G.add_node(node_name, rt=attribute_dict['rt'])
+    G.add_node(node_name, rt=attribute_dict['rt'], text="test text")
 
   for pair in [x for x in permutations([tup[0] for tup in node_list], 2)]:
     G.add_edge(*pair)

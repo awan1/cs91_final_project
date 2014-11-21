@@ -6,7 +6,19 @@
       font-family:Arial;
       font-size:10pt;
       color:darkgray;
-  }
+    }
+    div.tooltip {
+      position: absolute;
+      text-align: center;
+      width: 60px;
+      height: 28px;
+      padding: 2px;
+      font: 12px sans-serif;
+      background: lightsteelblue;
+      border: 0px;
+      border-radius: 8px;
+      pointer-events: none;
+    }
 </style>
 </head>
 <body>
@@ -22,6 +34,9 @@
       .style('top',50)
       .style('left',40)
       .attr('class','fig');
+    var div = d3.select("body").append("div")
+      .attr("class", "tooltip")
+      .style("opacity", 0);
 
     // We create a color scale.
     var color = d3.scale.category10();
@@ -67,6 +82,23 @@
         .style("fill", function(d) {
           // The node color depends on the club.
           return color(d.club);
+        })
+        .on("mouseover", function(d) {
+          div.transition()
+              .duration(200)
+              .style("opacity", .9);
+          div.html(d.text + "<br/>"  + "hi")
+             .style("left", (d3.event.pageX) + "px")
+             .style("top", (d3.event.pageY - 28) + "px");
+        })
+        .on("mouseout", function(d) {
+          div.transition()
+            .duration(500)
+            .style("opacity", 0);
+        })
+        .on("click", function(d) {
+          // Open the tweet url upon click
+          window.location.assign("http://www.twitter.com", '_blank');
         })
         .call(force.drag);
 
