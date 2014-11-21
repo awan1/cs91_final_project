@@ -4,6 +4,8 @@
 hbase-link-test.py: testing getting information from hbase
 """
 import networkx as nx
+import sys
+sys.path.append('../../')
 from networkx.readwrite import json_graph
 import json
 
@@ -32,18 +34,21 @@ def main():
     - in_reply_to_user_id
     - created_at
     '''
-    text = tweet_dict['text']
-    in_reply_to_status_id = tweet_dict['in_reply_to_status_id']
-    in_reply_to_user_id = tweet_dict['in_reply_to_user_id']
-    retweet_count = tweet_dict['retweet_count']
+    text = tweet_dict['tweet_info:text']
+    in_reply_to_status_id = tweet_dict['tweet_info:in_reply_to_status_id']
+    in_reply_to_user_id = tweet_dict['tweet_info:in_reply_to_user_id']
+    retweet_count = tweet_dict['tweet_info:retweet_count']
 
-    url = "http://www.twitter.com/{}/status/{}".format(username, tweet_id)
+    url = "http://www.twitter.com/{}/status/{}".format("XX", tweet_id)
 
+    print in_reply_to_status_id
     # Add it to graph as a node
-    G.add_node(node_name, retweet_count=retweet_count, url=url, text=text)
+    if in_reply_to_status_id != "None":
+        print "ADDED NODE: " + in_reply_to_status_id
+        G.add_node(tweet_id, retweet_count=retweet_count, url=url, text=text)
 
-    # Add its edges
-    G.add_edge(tweet_id, in_reply_to_status_id)
+        # Add its edges
+        G.add_edge(tweet_id, in_reply_to_status_id)
 
   # Dump to JSON
   data = json_graph.node_link_data(G)
