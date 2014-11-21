@@ -20,6 +20,16 @@ class HBaseTweetHelper:
     def iter(self):
         return self.table.scan()
 
+    def getRetweets(self):
+        for tweet_id, tweet_dict in self.iter():
+            if int(tweet_dict['tweet_info:retweet_count']) > 0:
+                yield (tweet_id, tweet_dict)
+
+    def getReplies(self):
+        for tweet_id, tweet_dict in self.iter():
+            if tweet_dict['tweet_info:in_reply_to_user_id'] != "None":
+                yield (tweet_id, tweet_dict)
+
 
     def appendPrefixToDicKeys(self, dic, prefix):
         newDic = {}
