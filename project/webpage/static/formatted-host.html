@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Home</title>
+    <link rel="icon" href="images/favicon.ico">
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="stylesheet" href="css/camera.css">
+    <link rel="stylesheet" href="css/component.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery-migrate-1.1.1.js"></script>
+    <script src="js/jquery.equalheights.js"></script>
+    <script src="js/jquery.ui.totop.js"></script>
+    <script src="js/jquery.easing.1.3.js"></script>
+    <script src="js/camera.js"></script>
+    <script src="js/snap.svg-min.js"></script>
+    <!--[if (gt IE 9)|!(IE)]><!-->
+    <script src="js/jquery.mobile.customized.min.js"></script>
+    <!--<![endif]-->
+    <script type="text/javascript" src="js/d3.js" charset="utf-8"></script>
+    <script>
+    $(document).ready(function(){
+      jQuery('#camera_wrap').camera({
+      loader: false,
+      pagination: true ,
+      minHeight: '394',
+      thumbnails: false,
+      height: '40.1875%',
+      caption: false,
+      navigation: false,
+      fx: 'mosaic'
+      });
+      $().UItoTop({ easingType: 'easeOutQuart' });
+    })
+    </script>
+    <!--[if lt IE 8]>
+    <div style=' clear: both; text-align:center; position: relative;'>
+      <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+        <img src="http://storage.ie6countdown.com/assets/100/images/banners/warning_bar_0000_us.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today." />
+      </a>
+    </div>
+    <![endif]-->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <link rel="stylesheet" media="screen" href="css/ie.css">
+    <![endif]-->
+    <!--[if lt IE 10]>
+    <link rel="stylesheet" media="screen" href="css/ie1.css">
+    <![endif]-->
+  </head>
+  <body class="page1">
+<!--==============================header=================================-->
+          <h1>TwitterGraph</h1>
+     <header>
+ <!--     <div class="container_12">
+        <div class="grid_12">
+          <div class="menu_block">
+            <nav id="bt-menu" class="bt-menu">
+              <a href="#" class="bt-menu-trigger"><span>Menu</span></a>
+              <ul>
+                <li class="current bt-icon"><a href="index.html">Home</a></li>
+                <li class="bt-icon"><a href="index-1.html">About</a></li>
+                <li class="bt-icon"><a href="index-2.html">Services</a></li>
+                <li class="bt-icon"><a href="index-3.html">Projects</a></li>
+                <li class="bt-icon"><a href="index-4.html">Blog</a></li>
+                <li class="bt-icon"><a href="index-5.html">Contacts</a></li>
+              </ul>
+            </nav>
+            <div class="clear"></div>
+          </div>
+          <div class="clear"></div>
+        </div>
+      </div>
+ -->
+    </header>
+    <div class="container_12">
+      <div class="grid_12">
+        <div class="slogan">
+          A Novel User-Centric Twitter Visualization<br>
+          <a href="#" class="btn">more</a>
+        </div>
+      </div>
+    </div>
+    <div id="js_container" class="js_container">
+        <script type="text/javascript">
+
+          var container = document.getElementById("js_container");
+          /***** Variables *****/
+          var width = container.offsetWidth;
+          var height = container.offsetHeight;
+          var force_charge = -10, force_distance = 30;
+          var json_file = "hbase-link.json";
+          var default_radius = 1.2;
+          /***** End Variables *****/
+
+
+          // Create the canvas
+          var svg = d3.select("#js_container")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .style('position','absolute')
+            .style('top',50)
+            .style('left',40)
+            .attr('class','fig');
+
+          // We create a color scale.
+          var color = d3.scale.category10();
+
+          // We create a force-directed dynamic graph layout.
+          var force = d3.layout.force()
+            .charge(force_charge)
+            .linkDistance(force_distance)
+            .size([width, height]);
+
+          // We load the JSON file.
+          // TODO: re-call this function to re-draw the graph? is there a good way to
+          // update a graph?
+          d3.json(json_file, function(error, graph) {
+            // In this block, the file has been loaded
+            // and the 'graph' object contains our graph.
+
+            // We load the nodes and links in the force-directed
+            // graph.
+            force.nodes(graph.nodes)
+              .links(graph.links)
+              .start();
+
+            // We create a <line> SVG element for each link
+            // in the graph.
+            var link = svg.selectAll(".link")
+              .data(graph.links)
+              .enter().append("line")
+              .attr("class", "link")
+              .attr("stroke-width", 1)
+              .attr("stroke", "black")
+              .style("opacity", 0.3);
+
+            // We create a <circle> SVG element for each node
+            // in the graph, and we specify a few attributes.
+            var node = svg.selectAll(".node")
+              .data(graph.nodes)
+              .enter().append("circle")
+              .attr("class", "node")
+              .attr("r", function(d) {
+                // the radius of the node depends on its retweet count. We want
+                // unretweeted tweets to show up as points so increment radius by 1.
+                return d.retweet_count + default_radius;
+              })  // radius
+              /*
+              .style("fill", function(d) {
+                // The node color depends on the mood.
+                return color(d.mood);
+              })
+              */
+              .on("mouseover", function(d) {
+                div.transition()
+                    .duration(200)
+                    .style("opacity", .9);
+                div.html(d.text + "<br/>"  + "hi")
+                   .style("left", (d3.event.pageX) + "px")
+                   .style("top", (d3.event.pageY - 28) + "px");
+              })
+              .on("mouseout", function(d) {
+                div.transition()
+                  .duration(500)
+                  .style("opacity", 0);
+              })
+              .on("dblclick", function(d) {
+                // Open the tweet url upon dblclick
+                window.location.assign(d.url, '_blank');
+              })
+              .call(force.drag);
+
+            // The name of each node is the node number.
+            node.append("title")
+              .text(function(d) { return d.name; });
+
+            // We bind the positions of the SVG elements
+            // to the positions of the dynamic force-directed graph,
+            // at each time step.
+            force.on("tick", function() {
+              link.attr("x1", function(d) { return d.source.x; })
+                .attr("y1", function(d) { return d.source.y; })
+                .attr("x2", function(d) { return d.target.x; })
+                .attr("y2", function(d) { return d.target.y; });
+
+              node.attr("cx", function(d) { return d.x; })
+                .attr("cy", function(d) { return d.y; });
+            });
+          });
+        </script>
+    </div>
+
+<!--==============================Content=================================-->
+
+<!--==============================footer=================================-->
+    <footer>
+      <div class="container_12">
+        <div class="grid_12">
+          <div class="socials">
+            <a href="#" class="fa fa-facebook"></a>
+            <a href="#" class="fa fa-twitter"></a>
+            <a href="#" class="fa fa-google-plus"></a>
+          </div>
+          <div class="clear"></div>
+          <div class="copy">
+            BizGroup &copy; 2014 | <a href="#">Privacy Policy</a> <br> Website designed by <a href="http://www.templatemonster.com/" rel="nofollow">TemplateMonster.com</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script>
+      $(document).ready(function(){
+       $(".bt-menu-trigger").toggle(
+        function(){
+        $('.bt-menu').addClass('bt-menu-open');
+        },
+        function(){
+        $('.bt-menu').removeClass('bt-menu-open');
+        }
+      );
+      });
+      (function() {
+      function init() {
+        var speed = 250,
+        easing = mina.easeinout;
+        [].slice.call ( document.querySelectorAll( '#grid > a' ) ).forEach( function( el ) {
+        var s = Snap( el.querySelector( 'svg' ) ), path = s.select( 'path' ),
+          pathConfig = {
+          from : path.attr( 'd' ),
+          to : el.getAttribute( 'data-path-hover' )
+          };
+        el.addEventListener( 'mouseenter', function() {
+          path.animate( { 'path' : pathConfig.to }, speed, easing );
+        } );
+        el.addEventListener( 'mouseleave', function() {
+          path.animate( { 'path' : pathConfig.from }, speed, easing );
+        } );
+        } );
+      }
+      init();
+      })();
+    </script>
+  </body>
+
+  <body>
+
+  </body>
+</html>

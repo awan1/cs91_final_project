@@ -11,10 +11,17 @@
 </style>
 </head>
 <body>
+  <h1>TwitterGraph</h1>
   <script type="text/javascript">
 
+    /***** Variables *****/
+    var width = 800, height = 800;
+    var force_charge = -10, force_distance = 30;
+    var json_file = "hbase-link.json";
+    var default_radius = 1.2;
+    /***** End Variables *****/
+
     // Create the canvas
-    var width = 300, height = 500;
     var svg = d3.select("body")
       .append("svg")
       .attr("width", width)
@@ -29,14 +36,14 @@
 
     // We create a force-directed dynamic graph layout.
     var force = d3.layout.force()
-      .charge(-120)
-      .linkDistance(100)
+      .charge(force_charge)
+      .linkDistance(force_distance)
       .size([width, height]);
 
     // We load the JSON file.
     // TODO: re-call this function to re-draw the graph? is there a good way to
     // update a graph?
-    d3.json("hbase-link.json", function(error, graph) {
+    d3.json(json_file, function(error, graph) {
       // In this block, the file has been loaded
       // and the 'graph' object contains our graph.
 
@@ -53,7 +60,8 @@
         .enter().append("line")
         .attr("class", "link")
         .attr("stroke-width", 1)
-        .attr("stroke", "black");
+        .attr("stroke", "black")
+        .style("opacity", 0.3);
 
       // We create a <circle> SVG element for each node
       // in the graph, and we specify a few attributes.
@@ -62,8 +70,9 @@
         .enter().append("circle")
         .attr("class", "node")
         .attr("r", function(d) {
-          // the radius of the node depends on its retweet count
-          return d.retweet_count;
+          // the radius of the node depends on its retweet count. We want
+          // unretweeted tweets to show up as points so increment radius by 1.
+          return d.retweet_count + default_radius;
         })  // radius
         /*
         .style("fill", function(d) {
@@ -84,8 +93,8 @@
             .duration(500)
             .style("opacity", 0);
         })
-        .on("click", function(d) {
-          // Open the tweet url upon click
+        .on("dblclick", function(d) {
+          // Open the tweet url upon dblclick
           window.location.assign(d.url, '_blank');
         })
         .call(force.drag);

@@ -96,8 +96,8 @@
             .duration(500)
             .style("opacity", 0);
         })
-        .on("click", function(d) {
-          // Open the tweet url upon click
+        .on("dblclick", function(d) {
+          // Open the tweet url upon dblclick
           window.location.assign("http://www.twitter.com", '_blank');
         })
         .call(force.drag);
