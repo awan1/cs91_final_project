@@ -84,4 +84,6 @@ if __name__ == '__main__':
         print "USAGE <OUTPUT_FILENAME>"
 
     fileName = sys.argv[1]
-    stream.sample()
+    while (true):
+        print "SAMPELEEEE\n"+ "**"*10
+        stream.sample()

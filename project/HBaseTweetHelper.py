@@ -3,7 +3,7 @@ import happybase
 
 class HBaseTweetHelper:
     def __init__(self):
-        connection = happybase.Connection('sesame.cs.swarthmore.edu',60020)
+        connection = happybase.Connection('localhost')
         tables = connection.tables()
         if "tweet_table" not in tables:
             connection.create_table('tweet_table',{'tweet_info':dict()})
@@ -28,7 +28,11 @@ class HBaseTweetHelper:
     def getReplies(self):
         for tweet_id, tweet_dict in self.iter():
             if tweet_dict['tweet_info:in_reply_to_user_id'] != "None":
-                yield (tweet_id, tweet_dict)
+                id = tweet_dict['tweet_info:in_reply_to_status_id']
+                result = self.table.row(id)
+                if len(result.keys()) > 0:
+                    print "ID: " + str(id) + " RESULT: " + str(result)
+                    yield (tweet_id, tweet_dict)
 
 
     def appendPrefixToDicKeys(self, dic, prefix):
