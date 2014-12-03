@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Home</title>
+    <title>CS91 Final Project</title>
     <link rel="icon" href="images/favicon.ico">
     <link rel="shortcut icon" href="images/favicon.ico">
     <link rel="stylesheet" href="css/camera.css">
@@ -48,6 +48,21 @@
     <!--[if lt IE 10]>
     <link rel="stylesheet" media="screen" href="css/ie1.css">
     <![endif]-->
+    <style>
+      div.tooltip {
+        position: absolute;
+        text-align: center;
+        width: 180px;
+        height: 78px;
+        padding: 2px;
+        font: 12px sans-serif;
+        color:black;
+        background: lightsteelblue;
+        border: 0px;
+        border-radius: 8px;
+        pointer-events: none;
+      }
+    </style>
   </head>
   <body class="page1">
 <!--==============================header=================================-->
@@ -91,7 +106,7 @@
           var height = container.offsetHeight;
           var force_charge = -10, force_distance = 30;
           var json_file = "hbase-link.json";
-          var default_radius = 1.2;
+          var default_radius = 3;
           /***** End Variables *****/
 
 
@@ -104,6 +119,9 @@
             .style('top',50)
             .style('left',40)
             .attr('class','fig');
+          var div = d3.select("body").append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0);
 
           // We create a color scale.
           var color = d3.scale.category10();
@@ -158,7 +176,7 @@
                 div.transition()
                     .duration(200)
                     .style("opacity", .9);
-                div.html(d.text + "<br/>"  + "hi")
+                div.html(d.text)
                    .style("left", (d3.event.pageX) + "px")
                    .style("top", (d3.event.pageY - 28) + "px");
               })
@@ -206,7 +224,7 @@
           </div>
           <div class="clear"></div>
           <div class="copy">
-            BizGroup &copy; 2014 | <a href="#">Privacy Policy</a> <br> Website designed by <a href="http://www.templatemonster.com/" rel="nofollow">TemplateMonster.com</a>
+            Gabe Benjamin, Cole Harbeck, Adrian Wan &copy; 2014 | <a href="#">Privacy Policy</a> <br> Website designed by <a href="http://www.templatemonster.com/" rel="nofollow">TemplateMonster.com</a>
           </div>
         </div>
       </div>
