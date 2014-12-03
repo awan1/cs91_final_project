@@ -16,7 +16,6 @@ consumer_secret=""
 access_token=""
 access_token_secret=""
 search = ""
-fileName = ""
 tweetHelper = HBaseTweetHelper()
 
 class StdOutListener(StreamListener):
@@ -43,9 +42,8 @@ class StdOutListener(StreamListener):
     def save_tweet(self, fullDict):
         """
         Takes in a full tweet dictionary and writes only the significant fields
-        to a file
+        to an hbase table
         """
-        myFile = open(fileName,'a')
         tweetDict = {}
 
         tweetDict['text'] = fullDict['text']
@@ -59,10 +57,7 @@ class StdOutListener(StreamListener):
         tweetDict['created_at'] = fullDict['created_at']
 
         tweetStr = json.dumps(tweetDict).encode("utf-8")
-
         tweetHelper.saveTweet(tweetDict)
-        print >> myFile, tweetStr
-        myFile.close()
 
 def readInKeys():
     global consumer_key, consumer_secret, access_token, access_token_secret
@@ -80,10 +75,4 @@ if __name__ == '__main__':
     auth.set_access_token(access_token, access_token_secret)
     stream = Stream(auth, l)
 
-    if len(sys.argv) < 2:
-        print "USAGE <OUTPUT_FILENAME>"
-
-    fileName = sys.argv[1]
-    while (true):
-        print "SAMPELEEEE\n"+ "**"*10
-        stream.sample()
+    stream.sample()

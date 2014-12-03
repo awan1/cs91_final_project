@@ -3,7 +3,7 @@ import happybase
 
 class HBaseTweetHelper:
     def __init__(self):
-        connection = happybase.Connection('localhost')
+        connection = happybase.Connection('sesame')
         tables = connection.tables()
         if "tweet_table" not in tables:
             connection.create_table('tweet_table',{'tweet_info':dict()})
