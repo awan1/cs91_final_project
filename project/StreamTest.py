@@ -24,6 +24,7 @@ class StdOutListener(StreamListener):
     """
 
     def on_data(self, data):
+        print "TWEET RECEIVED"
         myDict = json.loads(data)
 
         if 'entities' not in myDict:
