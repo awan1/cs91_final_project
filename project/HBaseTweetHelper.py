@@ -4,6 +4,7 @@ import happybase
 class HBaseTweetHelper:
     def __init__(self):
         connection = happybase.Connection('sesame')
+        self.connection = connection
         tables = connection.tables()
         if "tweet_table" not in tables:
             connection.create_table('tweet_table',{'tweet_info':dict()})
@@ -33,6 +34,18 @@ class HBaseTweetHelper:
                 if len(result.keys()) > 0:
                     print "ID: " + str(id) + " RESULT: " + str(result)
                     yield (tweet_id, tweet_dict)
+
+    def filterForConnectedTweets(self, limit):
+        tables = self.connection.tables()
+        if "tweet_table2" in tables:
+            self.connection.delete_table('tweet_table2', disable=True)
+        self.connection.create_table('tweet_table2', {'tweet_info':dict()})
+        table2 = self.connection.table('tweet_table2')
+        for id, tweet in self.iter():
+            if tweet['tweet_info:in_reply_to_user_id'] != "None":
+                if len(self.table.row(tweet['tweet_info:in_reply_to_status_id']).keys()) > 0:
+                    table2.put(id, tweet)
+
 
 
     def appendPrefixToDicKeys(self, dic, prefix):
