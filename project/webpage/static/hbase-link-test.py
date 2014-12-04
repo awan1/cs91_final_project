@@ -4,8 +4,6 @@
 hbase-link-test.py: testing getting information from hbase
 """
 import networkx as nx
-import sys
-sys.path.append('../../')
 from networkx.readwrite import json_graph
 import json
 
@@ -34,20 +32,20 @@ def main():
     - in_reply_to_user_id
     - created_at
     '''
-    text = tweet_dict['tweet_info:text']
-    in_reply_to_status_id = tweet_dict['tweet_info:in_reply_to_status_id']
-    in_reply_to_user_id = tweet_dict['tweet_info:in_reply_to_user_id']
-    retweet_count = tweet_dict['tweet_info:retweet_count']
+    text = tweet_dict['text']
+    in_reply_to_status_id = tweet_dict['in_reply_to_status_id']
+    in_reply_to_user_id = tweet_dict['in_reply_to_user_id']
+    retweet_count = tweet_dict['retweet_count'] + 1
 
-    url = "http://www.twitter.com/{}/status/{}".format("XX", tweet_id)
+    url = "http://www.twitter.com/{}/status/{}".format(username, tweet_id)
 
-    print in_reply_to_status_id
     # Add it to graph as a node
-    print "ADDED NODE: " + in_reply_to_status_id
-    G.add_node(tweet_id, retweet_count=retweet_count, url=url, text=text)
+    G.add_node(node_name, retweet_count=retweet_count, url=url, text=text,
+      username=username)
 
-    # Add its edges
-    G.add_edge(tweet_id, in_reply_to_status_id)
+    # If it's in reply to something in the graph, add the edge.
+    if in_reply_to_status_id in G:
+      G.add_edge(tweet_id, in_reply_to_status_id)
 
   # Dump to JSON
   data = json_graph.node_link_data(G)
