@@ -42,15 +42,16 @@
     var color = d3.scale.category10();
 
     // We create a force-directed dynamic graph layout.
+    var charge = -1200;
     var force = d3.layout.force()
-      .charge(-120)
+      .charge(charge)
       .linkDistance(100)
       .size([width, height]);
 
     // We load the JSON file.
     // TODO: re-call this function to re-draw the graph? is there a good way to
     // update a graph?
-    d3.json("graph.json", function(error, graph) {
+    function json_function(error, graph) {
       // In this block, the file has been loaded
       // and the 'graph' object contains our graph.
 
@@ -118,7 +119,22 @@
         node.attr("cx", function(d) { return d.x; })
           .attr("cy", function(d) { return d.y; });
       });
-    });
+    }
+    d3.json("graph.json", json_function);
+
+    // Helper function that updates the graph by checking for changes in the
+    // JSON file and updating as necessary.
+    function update() {
+      // alert("hi");
+      charge = -1 * charge;
+      force = force.charge(charge);
+      force.start();
+    }
+
+    // Update the graph every 2s.
+    var intervalID = setInterval(update, 2000 );
+    // var intervalID = setInterval(json, 2000 );
+
   </script>
 </body>
 </html>

@@ -133,9 +133,7 @@
             .linkDistance(force_distance)
             .size([width, height]);
 
-          // We load the JSON file.
-          // TODO: re-call this function to re-draw the graph? is there a good way to
-          // update a graph?
+          // Create the graph.
           d3.json(json_file, function(error, graph) {
             // In this block, the file has been loaded
             // and the 'graph' object contains our graph.
@@ -209,6 +207,18 @@
                 .attr("cy", function(d) { return d.y; });
             });
           });
+
+          // Helper function that updates the graph by checking for changes in the
+          // JSON file and updating as necessary.
+          var update = function() {
+            // alert("hi");
+            charge = -1 * charge;
+            force = force.charge(charge);
+            force.start();
+          }
+
+          // Update the graph every 2s.
+          var intervalID = setInterval(update, 2000 );
         </script>
     </div>
 
