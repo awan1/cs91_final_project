@@ -112,14 +112,17 @@
 
 
           // Create the canvas
-          var svg = d3.select("#js_container")
-            .append("svg")
-            .attr("width", width)
-            .attr("height", height)
-            .style('position','absolute')
-            .style('top',50)
-            .style('left',40)
-            .attr('class','fig');
+          function createSvg() {
+            return d3.select("#js_container")
+              .append("svg")
+              .attr("width", width)
+              .attr("height", height)
+              .style('position','absolute')
+              .style('top',50)
+              .style('left',40)
+              .attr('class','fig');
+          }
+          var svg = createSvg();
           var div = d3.select("body").append("div")
             .attr("class", "tooltip")
             .style("opacity", 0);
@@ -134,7 +137,7 @@
             .size([width, height]);
 
           // Create the graph.
-          d3.json(json_file, function(error, graph) {
+          function json_function(error, graph) {
             // In this block, the file has been loaded
             // and the 'graph' object contains our graph.
 
@@ -206,19 +209,25 @@
               node.attr("cx", function(d) { return d.x; })
                 .attr("cy", function(d) { return d.y; });
             });
-          });
+          }
+          d3.json(json_file, json_function);
 
-          // Helper function that updates the graph by checking for changes in the
-          // JSON file and updating as necessary.
-          var update = function() {
-            // alert("hi");
-            charge = -1 * charge;
-            force = force.charge(charge);
-            force.start();
+          // Crude update function that redraws the entire graph.
+          // TODO: make this more nuanced and only update added/deleted nodes.
+            // Helper function that updates the graph by checking for changes in the
+            // JSON file and updating as necessary.
+          function update() {
+            // clear svg
+            svg.selectAll("*").remove();
+            d3.select("svg").remove();
+            // Re-create svg
+            svg = createSvg();
+            // Recreate graph
+            d3.json(json_file, json_function);
           }
 
-          // Update the graph every 2s.
-          var intervalID = setInterval(update, 2000 );
+          // Update the graph
+          var intervalID = setInterval(update, 8000 );
         </script>
     </div>
 
