@@ -40,7 +40,8 @@ def main():
     url = "http://www.twitter.com/{}/status/{}".format(username, tweet_id)
 
     # Add it to graph as a node
-    G.add_node(node_name, retweet_count=retweet_count, url=url, text=text)
+    G.add_node(node_name, retweet_count=retweet_count, url=url, text=text,
+      username=username)
 
     # If it's in reply to something in the graph, add the edge.
     if in_reply_to_status_id in G:
