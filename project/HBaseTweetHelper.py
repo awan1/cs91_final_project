@@ -41,10 +41,18 @@ class HBaseTweetHelper:
             self.connection.delete_table('tweet_table2', disable=True)
         self.connection.create_table('tweet_table2', {'tweet_info':dict()})
         table2 = self.connection.table('tweet_table2')
+        counter = 0
+        tweet_counter = 0
         for id, tweet in self.iter():
+            counter += 1
+            if counter % 100000 == 0:
+                print str(counter) + " tweets processed, " + str(tweet_counter) + " tweets filtered"
             if tweet['tweet_info:in_reply_to_user_id'] != "None":
                 if len(self.table.row(tweet['tweet_info:in_reply_to_status_id']).keys()) > 0:
                     table2.put(id, tweet)
+                    table2.put(tweet['tweet_info:in_reply_to_status_id'], self.table.row(tweet['tweet_info:in_reply_to_status_id']))
+                    tweet_counter += 1
+        print "FILTER COMPLETE!"
 
 
 

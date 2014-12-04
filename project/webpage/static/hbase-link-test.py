@@ -43,12 +43,11 @@ def main():
 
     print in_reply_to_status_id
     # Add it to graph as a node
-    if in_reply_to_status_id != "None":
-        print "ADDED NODE: " + in_reply_to_status_id
-        G.add_node(tweet_id, retweet_count=retweet_count, url=url, text=text)
+    print "ADDED NODE: " + in_reply_to_status_id
+    G.add_node(tweet_id, retweet_count=retweet_count, url=url, text=text)
 
-        # Add its edges
-        G.add_edge(tweet_id, in_reply_to_status_id)
+    # Add its edges
+    G.add_edge(tweet_id, in_reply_to_status_id)
 
   # Dump to JSON
   data = json_graph.node_link_data(G)
