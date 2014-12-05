@@ -130,37 +130,17 @@
           // We create a color scale.
           var color = d3.scale.category10();
 
-          // We create a force-directed dynamic graph layout.
-          var force = d3.layout.force()
-            .charge(force_charge)
-            .linkDistance(force_distance)
-            .size([width, height]);
+          // Define the variables that will get populated by json_function
+          var force;
+          var links;
+          var nodes;
+          var myGraph;
 
-          // Create the graph.
-          function json_function(error, graph) {
-            // In this block, the file has been loaded
-            // and the 'graph' object contains our graph.
-
-            // We load the nodes and links in the force-directed
-            // graph.
-            force.nodes(graph.nodes)
-              .links(graph.links)
-              .start();
-
-            // We create a <line> SVG element for each link
-            // in the graph.
-            var link = svg.selectAll(".link")
-              .data(graph.links)
-              .enter().append("line")
-              .attr("class", "link")
-              .attr("stroke-width", 1)
-              .attr("stroke", "black")
-              .style("opacity", 0.3);
-
+          function getNodes() {
             // We create a <circle> SVG element for each node
             // in the graph, and we specify a few attributes.
-            var node = svg.selectAll(".node")
-              .data(graph.nodes)
+            return svg.selectAll(".node")
+              .data(myGraph.nodes)
               .enter().append("circle")
               .attr("class", "node")
               .attr("r", function(d) {
@@ -178,7 +158,7 @@
                 div.transition()
                     .duration(200)
                     .style("opacity", .9);
-                div.html(d.username + ":</br>" + d.text)
+                div.html(/*d.username + ":</br>" + */d.text)
                    .style("left", (d3.event.pageX) + "px")
                    .style("top", (d3.event.pageY - 28) + "px");
               })
@@ -192,37 +172,72 @@
                 window.location.assign(d.url, '_blank');
               })
               .call(force.drag);
+          }
 
-            // The name of each node is the node number.
-            node.append("title")
-              .text(function(d) { return d.name; });
+          function getLinks() {
+            // We create a <line> SVG element for each link
+            // in the graph.
+            return svg.selectAll(".link")
+              .data(myGraph.links)
+              .enter().append("line")
+              .attr("class", "link")
+              .attr("stroke-width", 1)
+              .attr("stroke", "black")
+              .style("opacity", 0.3);
+          }
 
-            // We bind the positions of the SVG elements
-            // to the positions of the dynamic force-directed graph,
-            // at each time step.
-            force.on("tick", function() {
-              link.attr("x1", function(d) { return d.source.x; })
+          function getForce() {
+            // We create a force-directed dynamic graph layout.
+            return d3.layout.force()
+              .charge(force_charge)
+              .linkDistance(force_distance)
+              .size([width, height])
+              .nodes(myGraph.nodes)
+              .links(myGraph.links)
+              // We bind the positions of the SVG elements
+              // to the positions of the dynamic force-directed graph,
+              // at each time step.
+              .on("tick", function() {
+                links.attr("x1", function(d) { return d.source.x; })
                 .attr("y1", function(d) { return d.source.y; })
                 .attr("x2", function(d) { return d.target.x; })
                 .attr("y2", function(d) { return d.target.y; });
 
-              node.attr("cx", function(d) { return d.x; })
+                nodes.attr("cx", function(d) { return d.x; })
                 .attr("cy", function(d) { return d.y; });
-            });
+              })
+              .start();
+          }
+
+          // Create the graph.
+          function json_function(error, graph) {
+            // In this block, the file has been loaded
+            // and the 'graph' object contains our graph.
+            myGraph = graph;
+            // We load the nodes and links in the force-directed
+            // graph.
+            force = getForce();
+            links = getLinks();
+            nodes = getNodes();
+            // Force ticks to skip the initial animation.
+            // force.alpha is the "temperature" of the simulation, so we
+            // take steps to make it colder.
+            var k = 0;
+            while ((force.alpha() > 0.07) && (k < 150)) {
+                force.tick(),
+                k = k + 1;
+            }
           }
           d3.json(json_file, json_function);
 
-          // Crude update function that redraws the entire graph.
-          // TODO: make this more nuanced and only update added/deleted nodes.
-            // Helper function that updates the graph by checking for changes in the
-            // JSON file and updating as necessary.
+          // Helper function that updates the graph by checking for changes in the
+          // JSON file and updating as necessary.
           function update() {
-            // clear svg
-            svg.selectAll("*").remove();
-            d3.select("svg").remove();
-            // Re-create svg
-            svg = createSvg();
-            // Recreate graph
+            // Clear out the old versions
+            nodes.exit().remove();
+            links.exit().remove();
+            force.exit().remove();
+            // Reload the json_file to update the graph
             d3.json(json_file, json_function);
           }
 
