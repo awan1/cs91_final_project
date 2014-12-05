@@ -146,7 +146,7 @@
               .attr("r", function(d) {
                 // the radius of the node depends on its retweet count. We want
                 // unretweeted tweets to show up as points so increment radius by 1.
-                return d.retweet_count + default_radius;
+                return d.retweet_count + default_radius + (1*d.isConnected);
               })  // radius
               /*
               .style("fill", function(d) {
@@ -223,7 +223,7 @@
             // force.alpha is the "temperature" of the simulation, so we
             // take steps to make it colder.
             var k = 0;
-            while ((force.alpha() > 0.07) && (k < 150)) {
+            while ((force.alpha() > 0.06) && (k < 150)) {
                 force.tick(),
                 k = k + 1;
             }

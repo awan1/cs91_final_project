@@ -87,7 +87,7 @@
         .attr("r", function(d) {
           // the radius of the node depends on its retweet count. We want
           // unretweeted tweets to show up as points so increment radius by 1.
-          return d.retweet_count + default_radius;
+          return d.retweet_count + default_radius + 3*d.isConnected;
         })  // radius
         /*
         .style("fill", function(d) {
