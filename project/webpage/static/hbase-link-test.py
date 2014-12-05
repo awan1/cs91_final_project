@@ -61,7 +61,7 @@ def main():
     with open("hbase-link.json", 'w') as f:
         json.dump(data, f)
     print "Added tweet " + node_name
-    time.sleep(10)
+    time.sleep(2)
 
 if __name__ == '__main__':
   main()

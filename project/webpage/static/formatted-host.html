@@ -232,17 +232,27 @@
 
           // Helper function that updates the graph by checking for changes in the
           // JSON file and updating as necessary.
-          function update() {
+					/*
+				  function update() {
             // Clear out the old versions
             nodes.exit().remove();
             links.exit().remove();
             force.exit().remove();
             // Reload the json_file to update the graph
             d3.json(json_file, json_function);
-          }
+					}*/
+					function update() {
+						// clear svg
+						svg.selectAll("*").remove();
+						d3.select("svg").remove();
+						// Re-create svg
+						svg = createSvg();
+						// Recreate graph
+						d3.json(json_file, json_function);
+					}
 
           // Update the graph
-          var intervalID = setInterval(update, 8000 );
+          var intervalID = setInterval(update, 2000 );
         </script>
     </div>
 
