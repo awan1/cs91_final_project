@@ -19,7 +19,7 @@ class HBaseTweetHelper:
         print "SAVED TWEET: " + str(rowId)
 
     def iter(self):
-        return self.table.scan()
+        return self.connection.table('tweet_table2').scan()
 
     def getRetweets(self):
         for tweet_id, tweet_dict in self.iter():
