@@ -136,6 +136,9 @@
           var nodes;
           var myGraph;
 
+					var min_relaxation = 0.06;
+					var refresh_rate = 4000;  // ms
+
           function getNodes() {
             // We create a <circle> SVG element for each node
             // in the graph, and we specify a few attributes.
@@ -223,7 +226,7 @@
             // force.alpha is the "temperature" of the simulation, so we
             // take steps to make it colder.
             var k = 0;
-            while ((force.alpha() > 0.06) && (k < 150)) {
+            while ((force.alpha() > min_relaxation) && (k < 150)) {
                 force.tick(),
                 k = k + 1;
             }
@@ -252,7 +255,7 @@
 					}
 
           // Update the graph
-          var intervalID = setInterval(update, 2000 );
+          var intervalID = setInterval(update, refresh_rate);
         </script>
     </div>
 
